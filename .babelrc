@@ -1,0 +1,13 @@
+// https://www.babeljs.cn/docs/usage
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
+  ]
+}

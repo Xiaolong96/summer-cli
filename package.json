@@ -1,0 +1,43 @@
+{
+  "name": "summer-cli",
+  "version": "0.2.0",
+  "description": "cli tool",
+  "scripts": {
+    "compile": "./node_modules/.bin/babel src --out-dir bin"
+  },
+  "bin": {
+    "summer-cli": "./bin/cmd",
+    "sc": "./bin/cmd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xiaolong96/summer-cli"
+  },
+  "keywords": [
+    "cli",
+    "summer-cli"
+  ],
+  "engines": {
+    "node": ">=8.0"
+  },
+  "author": "xiongxiaolong",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "chalk": "^4.1.0",
+    "commander": "^6.0.0",
+    "debug": "^4.1.1",
+    "download-git-repo": "^3.0.2",
+    "fs-extra": "^9.0.1",
+    "inquirer": "^7.3.2",
+    "log-symbols": "^4.0.0",
+    "ora": "^4.0.5",
+    "semver": "^7.3.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "eslint": "^7.5.0"
+  }
+}
