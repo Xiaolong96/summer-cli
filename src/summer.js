@@ -44,7 +44,7 @@ import cache from "./summer-cache";
 
   program
     .command("upload")
-    .description("Initialize git, associate the project and upload to Github 🌶")
+    .description("Create remote repository, associate the project and upload to Github 🌶")
     .alias("up")
     .usage("-u, --username [username] -t, --token [token] 🌶")
     .option("-u, --username [username]", "Github username")

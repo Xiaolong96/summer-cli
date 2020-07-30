@@ -7,6 +7,8 @@ exports.default = void 0;
 
 var _path = _interopRequireDefault(require("path"));
 
+var _chalk = _interopRequireDefault(require("chalk"));
+
 var _util = require("./utils/util");
 
 var logger = _interopRequireWildcard(require("./utils/logger"));
@@ -16,6 +18,8 @@ var _inquirer = _interopRequireDefault(require("inquirer"));
 var _templates = _interopRequireDefault(require("./config/templates"));
 
 var _generator = _interopRequireDefault(require("./utils/generator"));
+
+var _util2 = require("./utils/util.js");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -34,12 +38,20 @@ const init = projectName => {
     const answers = await inquire();
 
     try {
+      console.log();
+      console.log(`Creating a new project in ${_chalk.default.cyan(_path.default.resolve("./") + "/" + projectName)}.`);
+      console.log();
       await (0, _generator.default)(answers.template, _path.default.resolve(projectName));
+      console.log("Initialized a git repository.");
+      await (0, _util2.loadCmd)(`git init ${projectName}`, "git init");
+      console.log();
+      console.log("Installing packages. This might take a couple of minutes.");
+      await (0, _util2.loadCmd)(`npm install --prefix ./${projectName}`, "npm install");
       const fileName = `${projectName}/package.json`;
       answers.name = projectName;
       await (0, _util.updateJsonFile)(fileName, answers);
       console.log();
-      logger.info("#", "package.json update completed.");
+      logger.info("package.json update completed.");
       console.log();
       await createdTips(projectName);
     } catch (error) {
@@ -106,12 +118,14 @@ function formatTemplatesList(templates) {
 
 
 async function createdTips(target) {
-  logger.success("#", "Project initialization finished!🎉");
+  logger.success("✨", "Project initialization finished!");
   console.log();
-  console.log("To install packages:");
+  console.log("We suggest that you begin by typing:");
   console.log();
-  logger.info(`cd ${target}`);
-  logger.info("npm install (or if using yarn: yarn)");
+  console.log(` ${_chalk.default.cyan("cd")} ${target}`);
+  console.log(` ${_chalk.default.cyan("npm start")}`);
+  console.log();
+  console.log("Happy hacking!");
 }
 
 var _default = init;

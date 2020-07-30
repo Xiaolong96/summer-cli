@@ -1,5 +1,8 @@
 import fs from "fs";
 import * as logger from "./logger";
+import ora from "ora";
+const util = require("util");
+const exec = util.promisify(require("child_process").exec);
 
 /**
  * Determine whether the folder exists
@@ -40,4 +43,18 @@ let updateJsonFile = (fileName, obj) => {
   });
 };
 
-export { isExistFolder, updateJsonFile };
+/**
+ * Excuting an command
+ *
+ * @param {*} cmd
+ * @param {*} text
+ */
+let loadCmd = async (cmd, text) => {
+  let loading = ora();
+  loading.start(`${text}: Command is executing...`);
+  const res = await exec(cmd);
+  loading.succeed(`${text}: Command execution completed.`);
+  return res;
+};
+
+export { isExistFolder, updateJsonFile, loadCmd };

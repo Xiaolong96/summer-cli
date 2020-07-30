@@ -3,11 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateJsonFile = exports.isExistFolder = void 0;
+exports.loadCmd = exports.updateJsonFile = exports.isExistFolder = void 0;
 
 var _fs = _interopRequireDefault(require("fs"));
 
 var logger = _interopRequireWildcard(require("./logger"));
+
+var _ora = _interopRequireDefault(require("ora"));
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -15,12 +17,16 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const util = require("util");
+
+const exec = util.promisify(require("child_process").exec);
 /**
  * Determine whether the folder exists
  *
  * @param {*} name
  * @returns
  */
+
 let isExistFolder = async name => {
   return new Promise(resolve => {
     if (_fs.default.existsSync(name)) {
@@ -59,5 +65,22 @@ let updateJsonFile = (fileName, obj) => {
     }
   });
 };
+/**
+ * Excuting an command
+ *
+ * @param {*} cmd
+ * @param {*} text
+ */
+
 
 exports.updateJsonFile = updateJsonFile;
+
+let loadCmd = async (cmd, text) => {
+  let loading = (0, _ora.default)();
+  loading.start(`${text}: Command is executing...`);
+  const res = await exec(cmd);
+  loading.succeed(`${text}: Command execution completed.`);
+  return res;
+};
+
+exports.loadCmd = loadCmd;

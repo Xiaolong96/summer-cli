@@ -49,7 +49,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     (0, _summerInit.default)(project);
   });
 
-  _commander.default.command("upload").description("Initialize git, associate the project and upload to Github 🌶").alias("up").usage("-u, --username [username] -t, --token [token] 🌶").option("-u, --username [username]", "Github username").option("-t, --token [token]", "Access token created by Github").action(cmdObj => {
+  _commander.default.command("upload").description("Create remote repository, associate the project and upload to Github 🌶").alias("up").usage("-u, --username [username] -t, --token [token] 🌶").option("-u, --username [username]", "Github username").option("-t, --token [token]", "Access token created by Github").action(cmdObj => {
     (0, _summerUpload.default)(cmdObj.username, cmdObj.token);
   });
 

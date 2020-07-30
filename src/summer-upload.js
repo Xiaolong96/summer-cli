@@ -1,10 +1,10 @@
-import ora from "ora";
 import * as logger from "./utils/logger";
 import logSymbols from "log-symbols";
 import inquirer from "inquirer";
+import ora from "ora";
+import { updateJsonFile, loadCmd } from "./utils/util.js";
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
-import { updateJsonFile } from "./utils/util.js";
 
 const debug = require("debug")("upload");
 
@@ -33,7 +33,7 @@ const upload = async (username, token) => {
     debug("username: %s" + username);
     debug("token: %s" + token);
 
-    await loadCmd(`git init`, "git init");
+    // await loadCmd(`git init`, "git init");
 
     if (!username || !token) {
       logger.warn("Cannot create remote repository without input parameters.");
@@ -71,7 +71,7 @@ const upload = async (username, token) => {
       // logger.info("git push information: ");
       // console.log(pushInfo);
     }
-    await loadCmd(`npm install`, "npm install");
+    // await loadCmd(`npm install`, "npm install");
   } catch (err) {
     console.log();
     logger.error("Failed to create remote repository.");
@@ -119,19 +119,5 @@ async function inquire(type) {
 
   return answers;
 }
-
-/**
- * Excuting an command
- *
- * @param {*} cmd
- * @param {*} text
- */
-let loadCmd = async (cmd, text) => {
-  let loading = ora();
-  loading.start(`${text}: Command is executing...`);
-  const res = await exec(cmd);
-  loading.succeed(`${text}: Command execution completed.`);
-  return res;
-};
 
 export default upload;

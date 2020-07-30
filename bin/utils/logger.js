@@ -12,25 +12,25 @@ var _logSymbols = _interopRequireDefault(require("log-symbols"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const error = (...str) => {
-  console.log(_chalk.default.red(`[summer-cli]: ${str.join(" ")} ${_logSymbols.default.error}`));
+  console.log(`${_chalk.default.red("error")} ${str.join(" ")} ${_logSymbols.default.error}`);
 };
 
 exports.error = error;
 
 const warn = (...str) => {
-  console.log(_chalk.default.yellow(`[summer-cli]: ${str.join(" ")} ${_logSymbols.default.warning}`));
+  console.log(`${_chalk.default.yellow("warning")} ${str.join(" ")} ${_logSymbols.default.warning}`);
 };
 
 exports.warn = warn;
 
 const info = (...str) => {
-  console.log(`[summer-cli]: ${str.join(" ")} ${_logSymbols.default.info}`);
+  console.log(`${_chalk.default.blue("info")} ${str.join(" ")} ${_logSymbols.default.info}`);
 };
 
 exports.info = info;
 
 const success = (...str) => {
-  console.log(_chalk.default.green`[summer-cli]: ${str.join(" ")} ${_logSymbols.default.success}`);
+  console.log(`${_chalk.default.green("success")} ${str.join(" ")} ${_logSymbols.default.success}`);
 };
 
 exports.success = success;

@@ -1,9 +1,11 @@
 import path from "path";
+import chalk from "chalk";
 import { isExistFolder, updateJsonFile } from "./utils/util";
 import * as logger from "./utils/logger";
 import inquirer from "inquirer";
 import templates from "./config/templates";
 import generator from "./utils/generator";
+import { loadCmd } from "./utils/util.js";
 
 /**
  * Initial project creation
@@ -16,13 +18,27 @@ const init = projectName => {
     const answers = await inquire();
 
     try {
+      console.log();
+      console.log(
+        `Creating a new project in ${chalk.cyan(path.resolve("./") + "/" + projectName)}.`
+      );
+      console.log();
       await generator(answers.template, path.resolve(projectName));
+
+      console.log("Initialized a git repository.");
+
+      await loadCmd(`git init ${projectName}`, "git init");
+
+      console.log();
+      console.log("Installing packages. This might take a couple of minutes.");
+
+      await loadCmd(`npm install --prefix ./${projectName}`, "npm install");
 
       const fileName = `${projectName}/package.json`;
       answers.name = projectName;
       await updateJsonFile(fileName, answers);
       console.log();
-      logger.info("#", "package.json update completed.");
+      logger.info("package.json update completed.");
       console.log();
 
       await createdTips(projectName);
@@ -93,12 +109,14 @@ function formatTemplatesList(templates) {
  * @param {*} target Target path
  */
 async function createdTips(target) {
-  logger.success("#", "Project initialization finished!🎉");
+  logger.success("✨", "Project initialization finished!");
   console.log();
-  console.log("To install packages:");
+  console.log("We suggest that you begin by typing:");
   console.log();
-  logger.info(`cd ${target}`);
-  logger.info("npm install (or if using yarn: yarn)");
+  console.log(` ${chalk.cyan("cd")} ${target}`);
+  console.log(` ${chalk.cyan("npm start")}`);
+  console.log();
+  console.log("Happy hacking!");
 }
 
 export default init;
